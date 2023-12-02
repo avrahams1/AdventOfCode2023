@@ -1,4 +1,4 @@
-module.exports = `
+export default `
 9sixsevenz3
 seven1cvdvnhpgthfhfljmnq
 6tvxlgrsevenjvbxbfqrsk4seven

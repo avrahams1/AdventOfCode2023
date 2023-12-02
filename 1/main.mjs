@@ -1,9 +1,8 @@
-const input = require("./input");
+import input from "./input.mjs";
+import { parseLines } from "../common/parsing.mjs";
 
 function parseInput() {
-    return input
-        .split("\n")
-        .filter(input => input);
+    return parseLines(input);
 }
 
 const numbers = {
