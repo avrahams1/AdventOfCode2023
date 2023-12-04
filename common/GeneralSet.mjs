@@ -14,6 +14,10 @@ export default class GeneralSet {
         }
     }
 
+    get length() {
+        return this.map.size;
+    }
+
     add(item) {
         this.map.set(item.toIdString(), item);
     }
@@ -30,5 +34,9 @@ export default class GeneralSet {
 
     delete(item) {
         return this.map.delete(item.toIdString());
+    }
+
+    has(item) {
+        return this.map.has(item.toIdString());
     }
 }
