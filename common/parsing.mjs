@@ -8,3 +8,16 @@ export function parseLines(input) {
         .filter(line => line)
         .map(line => line.trim())
 }
+
+/**
+ * Parse a string number list
+ * @param {string} numberListString 
+ * @returns {number[]}
+ */
+export function parseNumberList(numberListString) {
+    return numberListString
+        .split(' ')
+        .filter(num => num && num.trim())
+        .map(num => num.trim())
+        .map(num => +num);
+}

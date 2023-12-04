@@ -1,5 +1,5 @@
 import input from "./input.mjs";
-import { parseLines } from "../common/parsing.mjs";
+import { parseLines, parseNumberList } from "../common/parsing.mjs";
 
 class Card {
     constructor(cardNumber, winningNumbers, myNumbers) {
@@ -36,14 +36,6 @@ const cards = (input => {
         if (!match) debugger;
 
         return +match.groups.cardNum;
-    }
-
-    function parseNumberList(numberListString) {
-        return numberListString
-            .split(' ')
-            .filter(num => num && num.trim())
-            .map(num => num.trim())
-            .map(num => +num);
     }
 
     return parseLines(input)
