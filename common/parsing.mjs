@@ -3,10 +3,7 @@
  * @param {string} input 
  */
 export function parseLines(input) {
-    return input
-        .split("\n")
-        .filter(line => line)
-        .map(line => line.trim())
+    return splitStringAndFilterEmpties(input, '\n');
 }
 
 /**
@@ -15,9 +12,19 @@ export function parseLines(input) {
  * @returns {number[]}
  */
 export function parseNumberList(numberListString) {
-    return numberListString
-        .split(' ')
+    return splitStringAndFilterEmpties(numberListString, ' ')
+        .map(num => +num);
+}
+
+/**
+ * 
+ * @param {string} str 
+ * @param {string} splitString 
+ * @returns {string}
+ */
+function splitStringAndFilterEmpties(str, splitString) {
+    return str
+        .split(splitString)
         .filter(num => num && num.trim())
         .map(num => num.trim())
-        .map(num => +num);
 }
