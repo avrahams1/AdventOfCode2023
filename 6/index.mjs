@@ -32,15 +32,15 @@ class Race {
     }
 
     numOfWinningButtonHoldingTimes() {
-        let counter = 0;
-
-        for (let i = 1; i <= this.time / 2; i++) {
-            if (i * (this.time - i) > this.distance) {
-                counter += (this.time % 2 == 0 && i === this.time / 2) ? 1 : 2;
+        let firstNumberThatWorks;
+        for (firstNumberThatWorks = 1; firstNumberThatWorks <= this.time / 2; firstNumberThatWorks++) {
+            if (firstNumberThatWorks * (this.time - firstNumberThatWorks) > this.distance) {
+                break;
             }
         }
 
-        return counter;
+        const isEvenTime = this.time % 2 == 0;
+        return ((Math.floor(this.time / 2) - firstNumberThatWorks + 1) * 2 - (isEvenTime ? 1 : 0));
     }
 }
 

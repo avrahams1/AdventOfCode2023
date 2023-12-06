@@ -1,25 +1,6 @@
 import input from "./input.mjs";
 import { parseLines, parseNumberList } from "../common/parsing.mjs";
 
-/*
-maxTime
-distance
-
-1 * (maxTime - 1)
-2 * (maxTime - 2)
-...
-(maxTime - 2) * 2
-(maxTime - 1)
-
-7: 1-6, 2-5,3-4
-9: 1-8,2-7,3-6,4-5
-10: 1-9,2-8,3-7;6-4,5-5
-buttonHolding = 1...time/2
-
-for odd time, multiply each hit by 2
-for even time, the last one (5-5 for 10) is unique, all others multiply by 2
-*/
-
 class Race {
     /**
      * ctor
@@ -32,15 +13,15 @@ class Race {
     }
 
     numOfWinningButtonHoldingTimes() {
-        let counter = 0;
-
-        for (let i = 1; i <= this.time / 2; i++) {
-            if (i * (this.time - i) > this.distance) {
-                counter += (this.time % 2 == 0 && i === this.time / 2) ? 1 : 2;
+        let firstNumberThatWorks;
+        for (firstNumberThatWorks = 1; firstNumberThatWorks <= this.time / 2; firstNumberThatWorks++) {
+            if (firstNumberThatWorks * (this.time - firstNumberThatWorks) > this.distance) {
+                break;
             }
         }
 
-        return counter;
+        const isEvenTime = this.time % 2 == 0;
+        return ((Math.floor(this.time / 2) - firstNumberThatWorks + 1) * 2 - (isEvenTime ? 1 : 0));
     }
 }
 
