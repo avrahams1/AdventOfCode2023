@@ -9,9 +9,15 @@ export function parseLines(input) {
 /**
  * Parse a string number list
  * @param {string} numberListString 
+ * @param {string?} afterSubstring 
  * @returns {number[]}
  */
-export function parseNumberList(numberListString) {
+export function parseNumberList(numberListString, afterSubstring = null) {
+    if (afterSubstring) {
+        const index = numberListString.indexOf(afterSubstring);
+        numberListString = numberListString.substring(index + afterSubstring.length);
+    }
+
     return splitStringAndFilterEmpties(numberListString, ' ')
         .map(num => +num);
 }
@@ -25,6 +31,6 @@ export function parseNumberList(numberListString) {
 function splitStringAndFilterEmpties(str, splitString) {
     return str
         .split(splitString)
-        .filter(num => num && num.trim())
-        .map(num => num.trim())
+        .filter(str => str && str.trim())
+        .map(str => str.trim())
 }
