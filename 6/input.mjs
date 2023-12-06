@@ -1,4 +1,4 @@
 export default `
-Time:        34     90     89     86
-Distance:   204   1713   1210   1780
+Time:      7  15   30
+Distance:  9  40  200
 `;
