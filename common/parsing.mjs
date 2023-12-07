@@ -26,7 +26,7 @@ export function parseNumberList(numberListString, afterSubstring = null) {
  * 
  * @param {string} str 
  * @param {string} splitString 
- * @returns {string}
+ * @returns {string[]}
  */
 function splitStringAndFilterEmpties(str, splitString) {
     return str
