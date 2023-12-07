@@ -5,6 +5,7 @@
  * @template T
  */
 export default function sortArray(array, sortMethod) {
-    array.sort(sortMethod);
-    return array;
+    const copy = [...array];
+    copy.sort(sortMethod);
+    return copy;
 }

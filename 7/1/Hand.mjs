@@ -29,12 +29,6 @@ export default class Hand {
      * @returns {number}
      */
     getHandWorth() {
-        // return calcHandType(this.sortedCardFrequencyArray) + 
-        //     (this.cards[0] * 10000) +
-        //     (this.cards[1] * 1000) +
-        //     (this.cards[2] * 100) + 
-        //     (this.cards[3] * 10) +
-        //     (this.cards[4] * 1);
         return calcHandType(this.sortedCardFrequencyArray);
     }
 
@@ -60,12 +54,12 @@ export default class Hand {
  */
 const HandType = {
     HighCard: 0,
-    OnePair: 10000000,
-    TwoPairs: 20000000,
-    ThreeOfAKind: 30000000,
-    FullHouse: 40000000,
-    FourOfAKind: 50000000,
-    FiveOfAKind: 60000000
+    OnePair: 1,
+    TwoPairs: 2,
+    ThreeOfAKind: 3,
+    FullHouse: 4,
+    FourOfAKind: 5,
+    FiveOfAKind: 6
 };
 
 /**

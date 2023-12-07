@@ -10,7 +10,8 @@ export default class Hand {
         this.cards = cards;
         this.bid = bid;
 
-        const cardsCountMap = cards.reduce((map, card) => {
+        const cardsExceptJokers = cards.filter(card => card !== Card.J);
+        const cardsCountMap = cardsExceptJokers.reduce((map, card) => {
             if (map.has(card)) {
                 map.set(card, map.get(card) + 1);
             } else {
@@ -22,6 +23,7 @@ export default class Hand {
         const cardFrequencyArray = [...cardsCountMap.values()].sortAndReturn((count1, count2) => count2 - count1);
 
         this.sortedCardFrequencyArray = cardFrequencyArray;
+        this.numberOfJokers = cards.length - cardsExceptJokers.length;
     }
 
     /**
@@ -29,13 +31,7 @@ export default class Hand {
      * @returns {number}
      */
     getHandWorth() {
-        // return calcHandType(this.sortedCardFrequencyArray) + 
-        //     (this.cards[0] * 10000) +
-        //     (this.cards[1] * 1000) +
-        //     (this.cards[2] * 100) + 
-        //     (this.cards[3] * 10) +
-        //     (this.cards[4] * 1);
-        return calcHandType(this.sortedCardFrequencyArray);
+        return calcHandType(this);
     }
 
     /**
@@ -60,21 +56,24 @@ export default class Hand {
  */
 const HandType = {
     HighCard: 0,
-    OnePair: 10000000,
-    TwoPairs: 20000000,
-    ThreeOfAKind: 30000000,
-    FullHouse: 40000000,
-    FourOfAKind: 50000000,
-    FiveOfAKind: 60000000
+    OnePair: 1,
+    TwoPairs: 2,
+    ThreeOfAKind: 3,
+    FullHouse: 4,
+    FourOfAKind: 5,
+    FiveOfAKind: 6
 };
 
 /**
  * 
- * @param {number[]} sortedCardFrequencyArray 
+ * @param {Hand} hand 
  * @returns {HandType}
  */
-function calcHandType(sortedCardFrequencyArray) {
-    switch (sortedCardFrequencyArray[0]) {
+function calcHandType(hand) {
+    const { sortedCardFrequencyArray, numberOfJokers } = hand;
+    const highestFrequency = sortedCardFrequencyArray.length ? sortedCardFrequencyArray[0] : 0;
+ 
+    switch (highestFrequency + numberOfJokers) {
         case 5:
             return HandType.FiveOfAKind;
         case 4:
