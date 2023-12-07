@@ -1,8 +1,8 @@
-import input from "./big-input.mjs";
-import { parseLines } from "../common/parsing.mjs";
+import input from "../big-input.mjs";
+import { parseLines } from "../../common/parsing.mjs";
 import { parseCard } from "./Card.mjs";
-import Hand from "./Hand..mjs";
-import "../common/environment.mjs";
+import Hand from "./Hand.mjs";
+import "../../common/environment.mjs";
 
 const hands = ((input) => {
     return parseLines(input)
