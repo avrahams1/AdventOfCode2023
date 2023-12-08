@@ -87,6 +87,12 @@ const numOfSteps = ((parsedInput) => {
         numOfDirectionRepetitions: 0
     }));
 
+    // for (const nodeWithRepetitionCounters of nodesWithRepetitionCounters) {
+    //     spinUntilEndNode(nodeWithRepetitionCounters);
+    // }
+
+    // console.log(nodesWithRepetitionCounters.map(x => x.numOfDirectionRepetitions), directions.length);
+    
     const repetitions = nodesWithRepetitionCounters.map(x => x.numOfDirectionRepetitions);
 
     for (let num = directions.length;; num += directions.length) {
