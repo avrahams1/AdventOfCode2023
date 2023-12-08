@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/avrahams1/AdventOfCode2023#readme",
   "dependencies": {
+    "mathjs": "^12.2.0",
     "memoize": "^10.0.0"
   }
 }

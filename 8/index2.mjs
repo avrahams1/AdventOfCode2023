@@ -1,4 +1,5 @@
 import memoize from "memoize";
+import { lcm } from "mathjs";
 import { smallInput3, bigInput, smallInput, smallInput2 } from "./input.mjs";
 import { parseLines } from "../common/parsing.mjs";
 import { parseDirection } from "./Direction.mjs";
@@ -87,22 +88,11 @@ const numOfSteps = ((parsedInput) => {
         numOfDirectionRepetitions: 0
     }));
 
-    // for (const nodeWithRepetitionCounters of nodesWithRepetitionCounters) {
-    //     spinUntilEndNode(nodeWithRepetitionCounters);
-    // }
-
-    // console.log(nodesWithRepetitionCounters.map(x => x.numOfDirectionRepetitions), directions.length);
-    
-    const repetitions = nodesWithRepetitionCounters.map(x => x.numOfDirectionRepetitions);
-
-    for (let num = directions.length;; num += directions.length) {
-        if (repetitions.every(otherNum => num % otherNum === 0)) {
-            return num;
-        }
+    for (const nodeWithRepetitionCounters of nodesWithRepetitionCounters) {
+        spinUntilEndNode(nodeWithRepetitionCounters);
     }
-})(parsedInput);
 
-// FOUND MANUALLY - found the LCM (least common multiple) of each loop size [ 59, 67, 71, 43, 79, 61 ] after multiplying by number of directions (281).
-// 16342438708751
+    return lcm(...nodesWithRepetitionCounters.map(nodeWithRepetitionCounter => nodeWithRepetitionCounter.numOfDirectionRepetitions * directions.length));
+})(parsedInput);
 
 console.log(numOfSteps);
