@@ -1,11 +1,11 @@
 /**
  * Enum for EntityType
  * @readonly
- * @enum {string}
+ * @enum {number}
  */
 export const Direction = {
-    R: 'right',
-    L: 'left'
+    R: 0,
+    L: 1
 };
 
 /**
