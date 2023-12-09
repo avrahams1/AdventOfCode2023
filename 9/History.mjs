@@ -14,15 +14,19 @@ export default class History {
      * @param {number} number 
      * @returns same object
      */
-    add(number) {
-        this.numbers.push(number);
-        
-        const newLen = this.numbers.length;
+    add(number, atEnd = true) {
+        if (atEnd) {
+            this.numbers.push(number);
+            
+            const newLen = this.numbers.length;
 
-        if (newLen === 2) {
-            this.difference = this.numbers[1] - this.numbers[0];
-        } else if (this.isSameDifference && newLen > 2) {
-            this.isSameDifference = this.numbers[newLen - 1] - this.numbers[newLen - 2] === this.difference;
+            if (newLen === 2) {
+                this.difference = this.numbers[1] - this.numbers[0];
+            } else if (this.isSameDifference && newLen > 2) {
+                this.isSameDifference = this.numbers[newLen - 1] - this.numbers[newLen - 2] === this.difference;
+            }
+        } else {
+            this.numbers.unshift(number);
         }
 
         return this;
@@ -33,16 +37,19 @@ export default class History {
      * @param {number[]} numbers
      * @returns same object
      */
-    addMultiple(numbers) {
-        numbers.forEach(this.add.bind(this));
+    addMultiple(numbers, atEnd = true) {
+        numbers.forEach(number => this.add(number, atEnd));
         return this;
     }
 
-    addWithSameDifference() {
+    addWithSameDifference(atEnd = true) {
         if (!this.isSameDifference) {
             debugger;
         }
 
-        this.numbers.push(this.numbers[this.numbers.length - 1] + this.difference);
+        if (atEnd)
+            this.numbers.push(this.numbers[this.numbers.length - 1] + this.difference);
+        else
+            this.numbers.unshift(this.numbers[0] - this.difference);
     }
 }
