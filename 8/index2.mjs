@@ -74,14 +74,6 @@ const numOfSteps = ((parsedInput) => {
         } while (!nodeWithRepetitionCounter.node.isEndNode);
     }
 
-    function catchUpToRepetitions(nodeWithRepetitionCounter, targetRepetitions) {
-        const numOfRepetitions = targetRepetitions - nodeWithRepetitionCounter.numOfDirectionRepetitions;
-
-        for (let i = 0; i < numOfRepetitions; i++) {
-            spinOnce(nodeWithRepetitionCounter);
-        }
-    }
-
     const { directions, nodes } = parsedInput;
     const nodesWithRepetitionCounters = nodes.filter(node => node.isStartNode).map(node => ({
         node,
