@@ -44,28 +44,6 @@ function findLoopLength() {
         }
 
         return counter;
-        /*
-        if (!cooordinates.inRange(matrix)) {
-            return 0;
-        }
-
-        const currCell = matrix[cooordinates.i][cooordinates.j];
-        const directedOffset = NodeType.toDirectedOffset(currCell, direction);
-
-        Logger.debug("processing", { cooordinates, currCell, directedOffset });
-
-        if (!directedOffset) {
-            Logger.debug("was 0\n\n\n");
-            return 0;
-        }
-
-        const [iOffset, jOffset] = directedOffset.offset;
-        const nextCoordinates = cooordinates.withOffset(iOffset, jOffset);
-
-        Logger.debug("continuing to", nextCoordinates);
-        Logger.debug("\n\n\n")
-        return 1 + findLoopLength(nextCoordinates, directedOffset.direction);
-        */
     }
 
     return Math.max(...Object.values(DirectedOffset).map((directedOffset) => {
