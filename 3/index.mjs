@@ -36,14 +36,14 @@ class Cell {
 class Accumulator {
     constructor(initialCell) {
         this.value = 0;
-        this.coordinates = [];
+        this.points = [];
 
         this.append(initialCell);
     }
 
     append(cell) {
         this.value = (this.value * 10) + cell.num;
-        this.coordinates.push(new Point(cell.i, cell.j));
+        this.points.push(new Point(cell.i, cell.j));
         return this;
     }
 }
@@ -104,7 +104,7 @@ class Solver {
             this.accumulator = (this.accumulator && this.accumulator.append(cell)) || cell.createAccumulator();
         } else {
             if (this.accumulator) {
-                const allSurroundingPoints = this.accumulator.coordinates.flatMap(point => point.getPointsAround(this.matrix));
+                const allSurroundingPoints = this.accumulator.points.flatMap(point => point.getPointsAround(this.matrix));
                 const set = new GeneralSet(allSurroundingPoints);
                 const hasAjdacentSymbol = [...set].some(point => {
                     const offsetCell = this.matrix[point.i][point.j];

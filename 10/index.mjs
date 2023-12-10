@@ -1,8 +1,9 @@
 import { LogLevel, Logger } from "../common/Logger.mjs";
+import Point from "../common/Point.mjs";
 import { parseLines } from "../common/parsing.mjs";
 import { DirectedOffset } from "./DirectedOffset.mjs";
 import { Direction } from "./Direction.mjs";
-import { Coordinates, NodeType, WorldMap } from "./Graph.mjs";
+import { NodeType, WorldMap } from "./Graph.mjs";
 import { bigInput as input } from "./input.mjs";
 
 Logger.logLevel = LogLevel.NONE;
@@ -20,16 +21,16 @@ function findLoopLength() {
 
     /**
      * 
-     * @param {Coordinates} cooordinates
+     * @param {Point} cooordinates
      * @param {Direction} direction  
      */
     function findLoopLength(cooordinates, direction) {
         let counter = 0;
-        let currCoordinates = cooordinates;
+        let currPoint = cooordinates;
         let currDirection = direction;
 
-        while (currCoordinates.inRange(matrix)) {
-            const currCell = matrix[currCoordinates.i][currCoordinates.j];
+        while (currPoint.inRange(matrix)) {
+            const currCell = matrix[currPoint.i][currPoint.j];
             const directedOffset = NodeType.toDirectedOffset(currCell, currDirection);
 
             if (!directedOffset) {
@@ -40,7 +41,7 @@ function findLoopLength() {
 
             const [iOffset, jOffset] = directedOffset.offset;
             currDirection = directedOffset.direction;
-            currCoordinates = currCoordinates.withOffset(iOffset, jOffset);
+            currPoint = currPoint.withOffset(iOffset, jOffset);
         }
 
         return counter;
@@ -50,10 +51,9 @@ function findLoopLength() {
         const { start } = worldMap;
         const [iOffset, jOffset] = directedOffset.offset;
 
-        const newCoordinates = start.withOffset(iOffset, jOffset);
+        const newPoint = start.withOffset(iOffset, jOffset);
 
-        Logger.info("starting work on", {newCoordinates, direction: directedOffset.direction});
-        return findLoopLength(newCoordinates, directedOffset.direction);
+        return findLoopLength(newPoint, directedOffset.direction);
     }));
 }
 

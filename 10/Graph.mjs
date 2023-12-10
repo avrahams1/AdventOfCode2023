@@ -1,3 +1,4 @@
+import Point from "../common/Point.mjs";
 import { DirectedOffset } from "./DirectedOffset.mjs";
 import { Direction } from "./Direction.mjs";
 
@@ -96,7 +97,7 @@ export class WorldMap {
         this.matrix = []
 
         /**
-         * @type {Coordinates}
+         * @type {Point}
          */
         this.start = null;
     }
@@ -112,34 +113,7 @@ export class WorldMap {
 
         let index;
         if ((index = line.indexOf('S')) !== -1) {
-            this.start = new Coordinates(this.matrix.length - 1, index);
+            this.start = new Point(this.matrix.length - 1, index);
         }
-    }
-}
-
-export class Coordinates {
-    /**
-     * 
-     * @param {number} i 
-     * @param {number} j 
-     */
-    constructor(i, j) {
-        this.i = i;
-        this.j = j;
-    }
-
-    withOffset(iOffset, jOffset) {
-        return new Coordinates(this.i + iOffset, this.j + jOffset);
-    }
-
-    /**
-     * 
-     * @param {T[][]} matrix 
-     * @template T
-     */
-    inRange(matrix) {
-        return this.i >= 0 && this.j >= 0 &&
-            this.i < matrix.length &&
-            this.j < matrix[this.i].length;
     }
 }
