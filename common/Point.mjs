@@ -4,9 +4,10 @@ export default class Point {
      * @param {number} i 
      * @param {number} j 
      */
-    constructor(i, j) {
+    constructor(i, j, name) {
         this.i = i;
         this.j = j;
+        this.name = name;
     }
 
     /**
