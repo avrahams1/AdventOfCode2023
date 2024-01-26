@@ -43,6 +43,8 @@ const galaxy = ((input) => {
  * @returns {Number}
 */
 function distance(p1, p2) {
+    // for /1, multiplier should be 1.
+    const multiplier = 999999;
     const { doubleRows, doubleCols } = galaxy;
     const basicDistance = Math.abs(p1.i - p2.i) + Math.abs(p1.j - p2.j);
     const doubleRowsNum = (() => {
@@ -53,7 +55,7 @@ function distance(p1, p2) {
             return 0;
         }
 
-        return max - min + 1;
+        return (max - min + 1) * multiplier;
     })();
 
     const doubleColsNum = (() => {
@@ -64,7 +66,7 @@ function distance(p1, p2) {
             return 0;
         }
 
-        return max - min + 1;
+        return (max - min + 1) * multiplier;
     })();
 
     return basicDistance + doubleRowsNum + doubleColsNum;
