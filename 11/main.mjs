@@ -75,10 +75,8 @@ let sum = 0;
 for (let first = 0; first < galaxy.pointsArray.length; first++) {
     for (let second = first + 1; second < galaxy.pointsArray.length; second++) {
         const d = distance(galaxy.pointsArray[first], galaxy.pointsArray[second]);
-        // console.log(`distance between ${galaxy.pointsArray[first].name} and ${galaxy.pointsArray[second].name} is ${d}`);
         sum += d;
     }
 }
 
 console.log(sum);
-// console.log(distance(new Point(5, 1), new Point(9, 4)));
