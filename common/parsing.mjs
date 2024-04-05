@@ -2,8 +2,8 @@
  * Parse multi line input into trimmed lines, ignoring empty ones.
  * @param {string} input 
  */
-export function parseLines(input) {
-    return splitStringAndFilterEmpties(input, '\n');
+export function parseLines(input, filterEmptyLines = true) {
+    return splitStringAndFilterEmpties(input.trim(), '\n', filterEmptyLines);
 }
 
 /**
@@ -28,9 +28,9 @@ export function parseNumberList(numberListString, afterSubstring = null) {
  * @param {string} splitString 
  * @returns {string[]}
  */
-function splitStringAndFilterEmpties(str, splitString) {
+function splitStringAndFilterEmpties(str, splitString, filterEmptyLines = true) {
     return str
         .split(splitString)
-        .filter(str => str && str.trim())
+        .filter(str => !filterEmptyLines || (str && str.trim()))
         .map(str => str.trim())
 }
