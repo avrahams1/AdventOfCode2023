@@ -36,5 +36,3 @@ const model = (input => {
 const sum = model.reduce((sum, segment) => sum + segment.score(), 0);
 
 console.log(sum);
-
-// console.log(model);
