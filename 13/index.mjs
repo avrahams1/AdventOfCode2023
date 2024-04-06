@@ -1,4 +1,4 @@
-import { smallInput } from "./input.mjs";
+import { bigInput, smallInput } from "./input.mjs";
 import { parseLines } from "../common/parsing.mjs"
 import { Pattern, PatternBuilder } from "./Pattern.mjs";
 
@@ -21,6 +21,6 @@ const model = (input => {
     patterns.push(patternBuilder.build());
 
     return patterns;
-})(smallInput)
+})(bigInput)
 
-console.log(model);
+console.log(model.reduce((acc, pattern) => acc + pattern.getScore(), 0));
