@@ -82,7 +82,8 @@ function score(arr, multiplier = 1) {
     let startIndex = null;
 
     for (let i = 0; i < arr.length - 1; i++) {
-        if (arr[i] === arr[i + 1] && reflectsAllTheWay(arr, i)) {
+        if ((arr[i] === arr[i + 1] && reflectsAllTheWay(arr, i, false)) ||
+            (numbersEqualExceptOneBit(arr[i], arr[i + 1]) && reflectsAllTheWay(arr, i, true))) {
             startIndex = i;
             break;
         }
@@ -99,12 +100,37 @@ function score(arr, multiplier = 1) {
  * 
  * @param {number[]} arr 
  * @param {number} index 
+ * @param {boolean} didReplaceBit
  * @returns {boolean}
  */
-function reflectsAllTheWay(arr, index) {
-    let firstIndex = index - 1, lastIndex = index + 2
-    for (;arr[firstIndex] === arr[lastIndex] && firstIndex >= 0 && lastIndex < arr.length;
-        firstIndex--, lastIndex++) {}
+function reflectsAllTheWay(arr, index, didReplaceBit) {
+    let firstIndex = index - 1, lastIndex = index + 2;
+
+    for (;firstIndex >= 0 && lastIndex < arr.length;
+        firstIndex--, lastIndex++) {
+            if (arr[firstIndex] === arr[lastIndex]) {
+                continue;
+            }
+            
+            if (didReplaceBit || !numbersEqualExceptOneBit(arr[firstIndex], arr[lastIndex])) {
+                break;
+            }
+
+            didReplaceBit = true;
+        }
     
-    return firstIndex === -1 || lastIndex === arr.length;
+    return didReplaceBit && (firstIndex === -1 || lastIndex === arr.length);
+}
+
+/**
+ * 
+ * @param {number} x 
+ * @param {number} y 
+ * @returns {boolean}
+ */
+function numbersEqualExceptOneBit(x, y) {
+    if (x === y) return false;
+    
+    const xor = x ^ y;
+    return (xor & (xor - 1)) === 0;
 }
