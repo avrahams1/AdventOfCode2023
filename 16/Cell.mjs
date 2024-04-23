@@ -10,7 +10,7 @@ const CellEnum = {
     VerticalSplitter: '|'
 };
 
-export const CellFactory = memoize(_cellFactory);
+export const CellFactory = _cellFactory;
 
 /**
  * 
@@ -72,6 +72,11 @@ export class Cell {
 }
 
 class EmptyCell extends Cell {
+    constructor() {
+        super();
+        this.usedDirections = new Set();
+    }
+
     /**
      * 
      * @param {Point} point 
@@ -79,6 +84,12 @@ class EmptyCell extends Cell {
      * @returns {MovementResult[]}
      */
     calcMovement(point, direction) {
+        if (this.usedDirections.has(direction)) {
+            return [];
+        }
+
+        this.usedDirections.add(direction);
+
         let newPoint;
 
         switch (direction) {

@@ -18,7 +18,7 @@ const matrix = ((input) => {
 
 function solve() {
     const visitedPoints = new GeneralSet();
-    const movementsCache = new GeneralSet();
+    
     /**
      * @type {Map<string, LightBeam>}
      */
@@ -53,10 +53,7 @@ function solve() {
             const cell = matrix[beam.point.i][beam.point.j];
             const movementResults = cell.calcMovement(beam.point, beam.direction);
             const validMovements = movementResults
-                .filter(movementResult => movementResult.point.inRange(matrix))
-                .filter(movement => !movementsCache.has(movement));
-            
-            movementsCache.addMultiple(...validMovements);
+                .filter(movementResult => movementResult.point.inRange(matrix));
 
             if (validMovements.length === 0) {
                 beamsToRemove.push(id);
