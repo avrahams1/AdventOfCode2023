@@ -1,9 +1,9 @@
-import { smallInput } from "./input.mjs";
+import { largeInput, smallInput } from "./input.mjs";
 import { parseLines } from '../common/parsing.mjs';
 import { Cell, CellFactory } from "./Cell.mjs";
 import GeneralSet from '../common/GeneralSet.mjs';
-import Point from '../common/Point.mjs';
 import { Direction, LightBeam } from "./LightBeam.mjs";
+import { sleep } from '../common/sleep.mjs';
 
 /**
  * @type {Cell[][]}
@@ -14,10 +14,11 @@ const matrix = ((input) => {
             mat.push(line.split('').map(CellFactory));
             return mat;
         }, [])
-})(smallInput);
+})(largeInput);
 
 function solve() {
     const visitedPoints = new GeneralSet();
+    const movementsCache = new GeneralSet();
     /**
      * @type {Map<string, LightBeam>}
      */
@@ -44,20 +45,25 @@ function solve() {
         const beamsToAdd = [];
 
         print(matrix, beams);
+        sleep(0.1);
 
         for (const [id, beam] of beams) {
             visitedPoints.add(beam.point);
 
             const cell = matrix[beam.point.i][beam.point.j];
             const movementResults = cell.calcMovement(beam.point, beam.direction);
-            const validMovements = movementResults.filter(movementResult => movementResult.point.inRange(matrix));
+            const validMovements = movementResults
+                .filter(movementResult => movementResult.point.inRange(matrix))
+                .filter(movement => !movementsCache.has(movement));
+            
+            movementsCache.addMultiple(...validMovements);
 
             if (validMovements.length === 0) {
                 beamsToRemove.push(id);
             } else if (validMovements.length === 1) {
                 const [movementResult] = validMovements;
-                beam.point = movementResult.point;
-                beam.direction = movementResult.direction;
+                beamsToRemove.push(id);
+                beamsToAdd.push(LightBeam.from(movementResult.point, movementResult.direction));
             } else {
                 beamsToRemove.push(id);
                 beamsToAdd.push(...validMovements.map(movementResult => 
@@ -97,6 +103,7 @@ function print(matrix, beams) {
         [Direction.West]: '<'
     };
 
+    const padding = 2;
     const mat = matrix.map(row => row.map(cell => ({
         char: cell.toString(),
         beams: []
@@ -112,28 +119,33 @@ function print(matrix, beams) {
     for (let i = 0; i < mat.length; i++) {
         for (let j = 0; j < mat[i].length; j++) {
             const {char, beams} = mat[i][j];
+            let charToAdd;
 
             if (char !== '.') {
-                string += char;
-                continue;
+                charToAdd = char;
+            } else {
+                switch (beams.length) {
+                    case 0:
+                        charToAdd = char;
+                        break;
+                    case 1:
+                        charToAdd = directionToChar[beams[0].direction]
+                        break;
+                    default:
+                        charToAdd = beams.length.toString()
+                }
             }
-
-            switch (beams.length) {
-                case 0:
-                    string += char;
-                    break;
-                case 1:
-                    string += directionToChar[beams[0].direction]
-                    break;
-                default:
-                    string += beams.length
+            
+            string += charToAdd;
+            for (let i = 0; i < padding - charToAdd.length; i++) {
+                string += ' ';          
             }
         }
         
         string += '\n';
     }
 
-    string += '\n';
+    string += '\n\n';
 
     console.log(string);
 }

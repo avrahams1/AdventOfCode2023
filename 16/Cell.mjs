@@ -42,6 +42,14 @@ export class MovementResult {
         this.point = point;
         this.direction = direction;
     }
+
+    /**
+     * 
+     * @returns {string}
+     */
+    toIdString() {
+        return `${this.point.toIdString()},${this.direction}`;
+    }
 }
 
 export class Cell {
@@ -88,10 +96,10 @@ class EmptyCell extends Cell {
                 break;
         }
 
-        return [{
-            point: newPoint,
+        return [new MovementResult(
+            newPoint,
             direction
-        }];
+        )];
     }
 
     toString() {
